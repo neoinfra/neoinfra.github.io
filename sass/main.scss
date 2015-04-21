@@ -1,0 +1,541 @@
+@import "compass";
+@import url(http://fonts.googleapis.com/css?family=Belleza);
+@import url(http://fonts.googleapis.com/css?family=Alegreya+SC:400,700);
+* {
+    font-family: 'Belleza', sans-serif;
+    font-size: 16px;
+    @media(min-width: 992px){
+		font-size: 24px;
+    }
+    font-weight: 300;
+    color: #333;
+    @include box-sizing(border-box);
+}
+@viewport {
+    orientation: portrait;
+}
+
+
+// MIXINS USED
+
+@mixin center-vertically($pseudo-el: 'before') {
+    position: relative;
+
+    &:#{$pseudo-el} {
+        content: '';
+        position: relative;
+        height: 100%;
+        width: 0;
+    }
+
+    &:#{$pseudo-el},
+    > * {
+        vertical-align: middle;
+        display: inline-block;
+    }
+}
+
+@mixin justify($vertical-align: top, $childs: '*') {
+    text-align: justify;
+    text-justify: distribute-all-lines;
+    line-height: 0;
+
+    // clear inline-block spacing
+    letter-spacing: -0.31em;
+
+    &:after {
+        content: '.';
+        display: inline-block;
+        height: 0!important;
+        width: 100%;
+        overflow: hidden!important;
+        visibility: hidden;
+
+        font-size: 0;
+        word-spacing: 100%;
+    }
+
+    > #{unquote($childs)} {
+        display: inline-block;
+        vertical-align: $vertical-align;
+        text-align: left;
+        line-height: 1;
+
+        // reset `inline-block spacing` trick
+        letter-spacing: 0;
+    }
+}
+
+
+
+// MARQUEE
+
+@include keyframes(loop) {
+    0%   {
+        @include transform( translateX(0) );
+    }
+    100% {
+        @include transform( translateX(-(33.3% * 2)));
+    }
+}
+
+
+$height: 230px;
+
+.marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    > ul {
+       list-style: none;
+       position: relative;
+       z-index: 1;
+       top: 0;
+       left: 0;
+       width: 300%!important;
+       min-height: $height;
+       @include transform(translate3d(0, 0, 0));
+       @include animation(loop 40s linear infinite);
+    }
+
+    > ul > li {
+        //@include center-vertically();
+        //@include justify(middle);
+
+        float: left;
+        width: 33.333333%;
+        height: $height;
+        overflow: hidden;
+        img {
+          margin: 20px 1.6%;
+        }
+    }
+}
+
+.imgs {
+    @include justify();
+
+    height: 230px;
+    overflow: hidden;
+    margin: 20px 3%;
+    img {
+        margin: 20px 1.6%;
+    }
+}
+
+h1,h2,h3,h4,h5{
+	font-family: 'Alegreya SC', serif;
+}
+@mixin flex {
+    @include display-flex(flex);
+    @include align-items(center);
+    @include justify-content(center);
+}
+@mixin button-nav ($color){
+	border: 2px solid $color;
+	color: $color;
+	display:inline-block;
+	text-align: center;
+	min-width: 100px;
+	margin: 0 10px;
+	cursor:pointer;
+	&:active, &:visited{
+		text-decoration: none;
+	}
+	&:hover{
+		text-decoration: none;
+		background: tint($color, 20%);
+		color: shade($color, 90%);
+	}
+	background:none;
+	padding: 10px;
+	@include border-radius(10px);
+	text-transform: uppercase;
+	&.bottom{
+		position:absolute;
+		@media(max-width: 993px){
+			bottom: 20px;
+		}
+		@media(min-width: 994px){
+			bottom: 50px;
+		}
+		width: 200px;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		&.large{
+			width: 300px;
+		}
+		&.huge{
+			width: 400px;
+		}
+	}
+}
+.collapse:not(.in){
+	height: 0px;
+}
+div.overlay{
+	position:absolute;
+	left:0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	opacity: 0.9;
+	background-color: #000;
+}
+//TYPOGRAPHY
+
+.white{
+	*{
+		color: white;
+	}
+}
+.uppercase{
+	text-transform: uppercase;
+}
+.text-left{
+	text-align: left;
+}
+.text-right{
+	text-align: right;
+}
+.text-xs-center{
+	@media(max-width: 992px){
+		text-align: center;	
+		*{
+			text-align: center !important;
+		}
+	}
+}
+.pad-bottom{
+	padding-bottom: 40px;
+}
+.subtext{
+	position:absolute;
+	right: 10px;
+	bottom: 10px;
+	font-size: 18px;
+}
+//EO TYPOGRAPHY
+
+//ELEMENT STYLES
+section,footer{
+	//padding-top: 50px;
+    position:relative;
+    @include flex;
+	div.container:not(.gallery){
+		@include clearfix;
+		@include flex;
+		div.nav-container{
+			margin-top: 50px;
+		}
+		h1{
+			margin-bottom: 50px;
+		}
+	}
+	a.nav{
+		@include button-nav(#fff);
+	}
+}
+header{
+	nav{
+		&.navbar-inverse{
+			background: rgba(0,0,0, 0.8);
+			border: none;
+			div.navbar-header{
+				a.navbar-brand{
+					@media(min-width: 994px){
+						width: 300px;
+					}
+					@media(max-width: 993px){
+						width: 200px;
+					}
+					img{
+						width: 100%;
+					}
+				}
+			}
+			div.navbar-collapse{
+				ul.nav{
+					float:right;
+					li{
+						font-family: 'Alegreya SC', serif;
+						font-size: 24px;
+						text-transform: uppercase;
+						color: #fff;
+						a{
+							color: #fff;
+							&:active, &:hover, &.active, &:focus{
+								border-color: #1e713a;
+								background:none;
+							}
+						}
+						&.active, &:active, &:focus{
+							a{
+								background:none;
+								border-color: #1e713a;
+							}
+						}
+						@media(min-width: 768px){
+							line-height: 90px;
+							display:inline;
+							border-bottom: 3px solid transparent;
+							&.active, &:active{
+								a{
+									background:none;
+									border-color: #1e713a;
+								}
+							}
+							a{
+								border-bottom: 3px solid transparent;
+								@include transition-property(border-color);
+								@include transition-duration(0.2s);
+								@include transition-timing-function(ease-in);
+								&:active, &:hover, &.active{
+									border-color: #1e713a;
+									background:none;
+								}
+								display:inline;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//EO ELEMENT STYLES
+
+
+//CUSTOM OVERRIDES
+section#banner{
+	background: #000;
+	img{
+		max-width: 100%;
+	}
+}
+
+section#gallery{
+	background: #222;
+	overflow:hidden;
+	.carousel-caption{
+		background: rgba(0,0,0,0.8);
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	.carousel-indicators{
+		bottom: -10px;
+	}
+	a.carousel-control{
+		background: none;	
+		span.fa{
+			top: 45%;
+			font-size: 60px;
+			color: #fff;
+			position:absolute;
+			&.fa-chevron-circle-right{
+				right: 20px;
+			}
+			&.fa-chevron-circle-left{
+				left: 20px;
+			}
+		}
+
+	}
+	
+}
+
+section#neo-paradise{
+	background: #1e713a;
+	h1{
+		@media(max-width: 768px){
+			margin: 0;
+		}
+	}
+	div.nav-container{
+		margin: 0;
+	}
+
+}
+
+section#amenities{
+	@include background-image(url("../img/amenities-backdrop.jpg"));
+	@include background-size(cover);
+	ul{
+		margin-left:-15px;
+		li{
+
+		}
+	}
+}
+section#distances{
+	background: #000;
+	h1{
+		margin-bottom: 10px;
+	}
+	ul.map-index{
+		margin-left: -15px;
+		li{
+			cursor: pointer;
+			margin: 5px 0;
+			border-left: 3px solid #000;
+			@include transition-property(border-color, padding-left);
+			@include transition-duration(0.2s);
+			@include transition-timing-function(ease-in);
+			&:active, &:hover, &.active{
+				border-color: #1e713a;
+				padding-left: 10px;
+			}
+		}
+	}
+	span.distance{
+		@include button-nav(#fff);
+		@media(min-width: 993px){
+			padding: 10px 10px 10px 70px;
+			@include border-radius(10px);
+			border: 2px solid #fff;
+			margin-left: -15px;
+			text-transform: uppercase;
+			margin-top: 40px;
+		}
+			text-align: center;
+			&:hover{
+				background: none;
+				color: #fff;
+			}
+			position: relative;
+			i{
+				position:absolute;
+				left:20px;
+				top: 15px;
+			}
+	}
+	div#map-canvas{
+		min-height: 400px;
+		@media(max-width: 973px){
+			min-height: 300px;
+		}
+	}
+	button#location-toggle{
+		margin: 0;
+		i{
+			float:right;
+		}
+		span{
+			text-transform: uppercase;
+			text-align: center;
+		}
+	}
+}
+
+section#plot{
+	overflow: hidden;
+	div.container{
+		overflow: hidden;
+		div{
+			overflow: hidden;
+			img{
+				height: 800px;
+			}
+		}
+	}
+	a.nav{
+		@include button-nav(#000);
+		&:hover{
+			color: #fff;
+		}
+	}
+}
+
+section#location{
+	overflow:hidden;
+	a.nav{
+		@include button-nav(#000);
+		&:hover{
+			color: #fff;
+		}
+	}
+	div.container{
+		overflow:hidden;
+		div{
+			overflow:hidden;
+			img#routeimg{
+				height: 650px;
+			}
+		}
+	}
+}
+
+section#neo-infra{
+	background: #1e713a;
+}
+footer#contact{
+	background: #000;
+	h1{
+		margin-bottom: 10px;
+	}
+	div.col-md-4{
+		margin-left: -15px;
+		@media(max-width: 992px){
+			margin-top: 10px;
+			margin-left: 0;
+		}
+
+	}
+	div.modal{
+		div.modal-backdrop{
+			z-index: 0;
+		}
+		div.modal-dialog{
+			div.modal-content{
+				div.modal-header{
+
+				}
+				div.modal-body{
+					div.alert{
+						//display:none;
+					}
+					form{
+						padding: 20px;
+						input[type="text"]{
+							width: 100%;
+							padding: 5px 10px;
+							box-shadow: none;
+						}
+						label{
+							display:block;
+							color: #999;
+						}
+					}
+					div#recaptcha{
+						div{
+							div{
+								margin: 10px auto;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	div.phone{
+		text-align:center;
+	}
+	div.social{
+		text-align: right;
+		a{
+			i{
+				color: #444;
+				margin: 0 10px;
+			}
+			&:hover{
+				i{
+					color: #fff;
+				}
+			}
+		}
+	}
+}
