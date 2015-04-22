@@ -40,7 +40,7 @@ var directionMap = {
 		var latlng  = this.latlngMap[key];
 		return new google.maps.LatLng(latlng.lat, latlng.lng); 
 	} ,
- 	getDirections : function(key){
+ 	getDirections : function(key, map){
 		var _that  = this;
 		var request = {
 			origin : _that.start(),
@@ -51,13 +51,14 @@ var directionMap = {
 			if(status == google.maps.DirectionsStatus.OK){
 				$('span.distance').html('<i class="fa fa-car fa-lg"></i>'+response.routes[0].legs[0].distance.text);
 				directionMap.googleDirectionDisplay.setDirections(response);
+				google.maps.event.trigger(map, 'resize');
 			}
 		});
 	},
 	display: function(key){
 		var map = new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);
 		this.googleDirectionDisplay.setMap(map); 
-		this.getDirections(key);
+		this.getDirections(key, map);
 	}
 }
 
