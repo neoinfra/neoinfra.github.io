@@ -4,33 +4,29 @@ var directionMap = {
 			lat: 12.839939,
         	lng: 77.677003
 		},
-		silkBoard : {
-			lat: 12.839939,
-        	lng: 77.677003
-		},
 		narayana : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.809295,
+        	lng: 77.695092
 		},
 		hclOffice : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.7881976,
+        	lng: 77.6470337
 		},
 		biocon : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.821019,
+        	lng: 77.675277
 		},
 		sarala : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.8088475,
+        	lng: 77.5838234
 		},
 		ryan : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.8056715,
+        	lng: 77.586529
 		},
 		amc : {
-			lat: 12.839939,
-        	lng: 77.677003
+			lat: 12.828508,
+        	lng: 77.589101
 		}
 	},
 	googleDirectionDisplay: new google.maps.DirectionsRenderer(),
