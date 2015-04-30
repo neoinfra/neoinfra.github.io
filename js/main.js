@@ -173,7 +173,7 @@ function submitForm(formData) {
 
 
 $(document).ready(function(){
-	if($(window).width() > 993)
+	if($(window).width() > 993 && $(window).height() > 900)
 		$("section, footer").height($(window).height());
 	else{
 		$("section#banner").height($(window).height());
